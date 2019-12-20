@@ -11,10 +11,9 @@ from lemsim.utils import create_bid
 from lemsim.wdp import WinnerDeterminationProblem
 
 
-def simple_split_mechanism(bids, r=None, alpha=0, beta=1, seed=420):
+def simple_split_mechanism(bids, r=None, alpha=0, beta=1, seed=420, T=48):
     
     EPS = 1e-4
-    T = 48
     if r is None:
         r = np.random.RandomState(1)
         
@@ -79,10 +78,9 @@ def simple_split_mechanism(bids, r=None, alpha=0, beta=1, seed=420):
 
 
 
-def vcg_mechanism(bids, r=None, alpha=0, beta=1, seed=420):
+def vcg_mechanism(bids, r=None, alpha=0, beta=1, seed=420, T=48):
     
     EPS = 1e-4
-    T = 48
     if r is None:
         r = np.random.RandomState(1)
 

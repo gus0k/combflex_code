@@ -174,7 +174,7 @@ class WinnerDeterminationProblem:
             for v in self.model.variables():
                 vars_[v.name] = v.varValue
                 
-        summary_ = compute_results(vars_)
+        summary_ = compute_results(vars_, self.M)
         self.summary = summary_
         self.is_solved = True
         costs = self.get_costs()
@@ -201,11 +201,12 @@ class WinnerDeterminationProblem:
         """
         a = self.a
         b = self.b
-        price_buy = np.ones(48) * -1.0
-        price_sell = np.ones(48) * -1.0
+        M = self.M
+        price_buy = np.ones(M) * -1.0
+        price_sell = np.ones(M) * -1.0
         if self.is_solved and (b >= a):
             res = []
-            for t in range(48):
+            for t in range(M):
                 selling, buying = [], []
                 for v in self.model.variables():
                     if v.name in [x._LpElement__name for x in self.vars_buying[t]]:
@@ -251,9 +252,9 @@ class WinnerDeterminationProblem:
 
         return costs
     
-def compute_results(sol):
-    varbuy = defaultdict(lambda :np.zeros(48))
-    varsell = defaultdict(lambda :np.zeros(48))
+def compute_results(sol, T):
+    varbuy = defaultdict(lambda :np.zeros(T))
+    varsell = defaultdict(lambda :np.zeros(T))
     payment = defaultdict(float)
     for k, v in sol.items():
         sp = k.split('_')

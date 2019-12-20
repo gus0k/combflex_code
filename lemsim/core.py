@@ -161,7 +161,7 @@ class MainSim:
             if markup:
                 price_buy[15: 30] *= 0.9
                 price_sell[15: 30] *= 1.1
-                for t in range(48):
+                for t in range(T):
                     if price_buy[t] < price_sell[t]:
                         m = price_buy[t] + price_sell[t]
                         price_buy[t] = m * 0.5
@@ -189,10 +189,10 @@ class MainSim:
         elif self.market_type == 'combflex_split':
             #print('entre split')
             #print(alpha, beta)
-            prob, vb, vs, costs = simple_split_mechanism(bid_list, r, alpha, beta, seed=self.seed)     
+            prob, vb, vs, costs = simple_split_mechanism(bid_list, r, alpha, beta, seed=self.seed, T=T)     
         elif self.market_type == 'combflex_vcg':
             #print('Entré vcg')
-            prob, vb, vs, costs = vcg_mechanism(bid_list, r, alpha, beta, seed=self.seed)
+            prob, vb, vs, costs = vcg_mechanism(bid_list, r, alpha, beta, seed=self.seed, T=T)
         
         for k, v in costs.items():
             pro_dict[int(k)].add_cost(v)

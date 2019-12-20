@@ -1,8 +1,8 @@
-numpy = "*"
-seaborn = "*"
-pandas = "*"
-docplex = "*"
-jupyter = "*"
-pymarket = "*"
-dill = "*"
-bokeh = "*"
+numpy
+seaborn
+pandas
+docplex
+jupyter
+pymarket
+dill
+bokeh

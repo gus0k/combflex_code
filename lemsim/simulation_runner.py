@@ -39,6 +39,7 @@ def simulation_run(nick, settings, N, b_min, b_max, eff_c,
     DATA = get_data(DATE, r2, N, N // 2, PATHTODATA)
 
     data = next(DATA)
+    data = data[:T, :]
 
     prosumers = []
     for n in range(N // 4):
@@ -120,6 +121,7 @@ def global_metrics(N, b_min, b_max, eff_c,
     DATA = get_data(DATE, r2, N, N // 2, PATHTODATA)
 
     data = next(DATA)
+    data = data[:T, :]
 
     prosumers = []
     for n in range(N // 4):
