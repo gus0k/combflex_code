@@ -8,4 +8,4 @@ install:
 	venv/bin/python3 -m pip install -r requirements.txt
 
 runsim:
-	venv/bin/python3 simulations/src/run_par.py
+	nohup venv/bin/python3 simulations/src/run_par.py > simoutput.txt &
