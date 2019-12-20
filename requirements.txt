@@ -1,0 +1,8 @@
+numpy = "*"
+seaborn = "*"
+pandas = "*"
+docplex = "*"
+jupyter = "*"
+pymarket = "*"
+dill = "*"
+bokeh = "*"
