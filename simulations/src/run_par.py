@@ -29,14 +29,15 @@ from lemsim.sim_manager import run_one_day
 
 #####################################
 
-os.environ["CPLEXPATH"] = '/home/infres/dkiedanski/Cplex/cplex/bin/x86-64_linux/cplex'
+#os.environ["CPLEXPATH"] = '/home/infres/dkiedanski/Cplex/cplex/bin/x86-64_linux/cplex'
+os.environ["CPLEXPATH"] = "/home/guso/.local/bin/ibm/cplex/bin/x86-64_linux/cplex"
 #os.environ["CPLEXPATH"] = '/opt/ibm/ILOG/CPLEX_Studio129/cplex/bin/x86-64_linux/cplex'
 #print(parentdir)
 
 NICK = 'sim_dec_1-'
 
 INTERVAL = 2
-CANT = 100
+CANT = 10
 FIRSTDAY = datetime.date(2012, 8, 1)
 TIMEDELTA = datetime.timedelta(days=INTERVAL)
 
