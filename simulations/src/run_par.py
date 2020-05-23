@@ -36,11 +36,6 @@ os.environ["CPLEXPATH"] = "/home/guso/.local/bin/ibm/cplex/bin/x86-64_linux/cple
 
 NICK = 'sim_dec_1-'
 
-INTERVAL = 2
-CANT = 10
-FIRSTDAY = datetime.date(2012, 8, 1)
-TIMEDELTA = datetime.timedelta(days=INTERVAL)
-
 T = 48
 p_1 = np.ones(T) * 16.0
 p_1[: T // 2] = 12.0
@@ -53,8 +48,8 @@ PARAMS = {
     'b_max': 13,
     'eff_c': 0.95,
     'eff_d': 0.95,
-    'd_max': 5,
-    'd_min': -5,
+    'd_max': 1.25,
+    'd_min': -1.25,
     'seed': 420,
     'PRICES_BUY': [p_1, p_2],
     'PRICES_SELL': [ps],
@@ -67,13 +62,31 @@ PARAMS = {
 ###################################################
 
 
-DATES = [str(FIRSTDAY + (TIMEDELTA * x)) for x in range(1, CANT)]
 
 
-def fun(args):
-    return run_one_day(args[0], args[1], onoff=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], nick=args[2])
+#def fun(args):
+#    return run_one_day(args[0], args[1], onoff=[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1], nick=args[2])
 
-arguments = ((day, PARAMS, NICK) for day in DATES)
-with ProcessPoolExecutor() as executor:
-    for result in executor.map(fun, arguments):   # (*p) does the unpacking part
-        pass
+if __name__ == '__main__':
+
+    day = sys.argv[1]
+    
+    name = PARAMS['savepath']
+    name += NICK
+    name += day + '_' + '-'.join(map(str,[PARAMS[x] for x in ['N', 'seed', 'b_max', 'DAYS']]))
+    name += '.csv'
+    print(name)
+    if os.path.isfile(name):
+        print('File exists')
+    else:
+        #onof = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
+        onof = [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        run_one_day(day, PARAMS, onoff=onof, nick=NICK)
+
+
+
+
+#arguments = ((day, PARAMS, NICK) for day in DATES)
+#with ProcessPoolExecutor() as executor:
+#    for result in executor.map(fun, arguments):   # (*p) does the unpacking part
+#        pass

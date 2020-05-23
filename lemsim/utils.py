@@ -33,10 +33,10 @@ SELLING_STATES = [
 
 def derive_bid(load, bat_usage, price_buy, price_sell):
     
-    EPS = 1e-4
+    EPS = 1e-9
     
-    bat_usage = bat_usage.round(4)
-    load = load.round(4)
+    bat_usage = bat_usage
+    load = load
     
     net = bat_usage + load
     #print('Net', net)
@@ -133,8 +133,7 @@ def derive_bid(load, bat_usage, price_buy, price_sell):
 
 
 
-def create_bid(uid, load, bat_usage, price_buy, price_sell, ramp_up=None, ramp_down=None):
-    
+def create_bid(uid, load, bat_usage, price_buy, price_sell, ramp_up=None, ramp_down=None, efc=0.95, efd=0.95):
     
     load = load.copy()
     bat_usage = bat_usage.copy()
@@ -178,7 +177,8 @@ def create_bid(uid, load, bat_usage, price_buy, price_sell, ramp_up=None, ramp_d
                                quantity=quant,
                                isbuying=True,
                                unitcost=price_buy[t_start: t_end + 1].mean(), # TODO,
-                               upper_bound=up_bound)
+                               upper_bound=up_bound * 0.95
+                               )
                            
         
         elif bidtype == 'sellbundle':
@@ -195,12 +195,15 @@ def create_bid(uid, load, bat_usage, price_buy, price_sell, ramp_up=None, ramp_d
                 assert len(ramp_down) == t_end - t_start + 1
                 up_bound = ramp_down.copy()
             
+            ## TODO: check this
+    #        k_ = np.minimum(quantities, up_bound).sum()
+    #        keep = min(keep, k_)
             cons = new_bid.add_bundle_selling(start=t_start,
                                        end=t_end,
                                        quantities=quantities,
                                        keep=keep,
                                        unitcost=price_sell[t_start: t_end + 1].mean(), # TODO
-                                       keep_quantities=up_bound
+                                       keep_quantities=up_bound / efd
                                       )
         if cons is False:
             allin = False
