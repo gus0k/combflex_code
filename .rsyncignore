@@ -1,0 +1,7 @@
+[Current] Plots.ipynb
+.git
+.gitignore
+__pycache__
+.ipynb
+.ipynb_checkpoints
+venv

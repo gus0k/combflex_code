@@ -177,7 +177,7 @@ def create_bid(uid, load, bat_usage, price_buy, price_sell, ramp_up=None, ramp_d
                                quantity=quant,
                                isbuying=True,
                                unitcost=price_buy[t_start: t_end + 1].mean(), # TODO,
-                               upper_bound=up_bound * 0.95
+                               upper_bound=up_bound / efc
                                )
                            
         
