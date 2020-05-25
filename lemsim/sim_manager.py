@@ -7,7 +7,7 @@ import matplotlib.pyplot as plt
 from lemsim.simulation_runner import simulation_run, global_metrics
 from lemsim.utils import create_bid
 
-def run_one_day(day, PARAMS, onoff=[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], nick=''):
+def run_one_day(day, PARAMS, onoff=[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], nick=''):
     start = time.time()
     sims = []
     rows = []
@@ -173,6 +173,34 @@ def run_one_day(day, PARAMS, onoff=[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], nick=''
         nick + '-'.join(map(str, param_.values())), settings=param_, DATE=day, **PARAMS
         )
         sims.append(sim_)    
+
+    if onoff[13]:
+        param_ = {
+            'bid_type': 'flexible',
+            'pre_trade': 'yes',
+            'signaling': 'ismarket',
+            'market_type': 'combflex',
+            'combflex_alpha': 0.5,
+            'combflex_beta': 0.5
+        }
+        sim_ = simulation_run(
+        nick + '-'.join(map(str, param_.values())), settings=param_, DATE=day, **PARAMS
+        )
+        sims.append(sim_)
+
+    if onoff[14]:
+        param_ = {
+            'bid_type': 'flexible',
+            'pre_trade': 'yes',
+            'signaling': 'ismarket',
+            'market_type': 'combflex_split',
+            'combflex_alpha': 0.5,
+            'combflex_beta': 0.5
+        }
+        sim_ = simulation_run(
+        nick + '-'.join(map(str, param_.values())), settings=param_, DATE=day, **PARAMS
+        )
+        sims.append(sim_)
 
 
     metrics = global_metrics(DATE=day, **PARAMS)

@@ -2,6 +2,8 @@ import sys
 import numpy as np
 import pandas as pd
 import datetime
+import os
+import dill
 import lemsim.prosumer as lpro
 import time
 import lemsim.broker as lbro
@@ -31,6 +33,14 @@ def simulation_run(nick, settings, N, b_min, b_max, eff_c,
         `signaling`: type of signaling (`none`, `ismarket`, `clearing price`)
     
     """
+    filename = savepath + nick + DATE
+    fl_ = filename + '.pkl'
+    print(fl_)
+    if os.path.isfile(fl_):
+        print('Not running, using existing')
+        with open(fl_, 'rb') as fh:
+            sim = dill.load(fh)
+            return sim
     
     start = time.time()
     r = np.random.RandomState(seed)
@@ -102,7 +112,6 @@ def simulation_run(nick, settings, N, b_min, b_max, eff_c,
                      'maximum_increase_costs': max_inc, 'minimum_decrease_costs': max_dec}
     sim.metric_results = metric_results
     
-    filename = savepath + nick + DATE
     sim.save(filename)
     end = time.time()
     

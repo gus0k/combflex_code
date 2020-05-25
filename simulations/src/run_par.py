@@ -29,12 +29,12 @@ from lemsim.sim_manager import run_one_day
 
 #####################################
 
-#os.environ["CPLEXPATH"] = '/home/infres/dkiedanski/Cplex/cplex/bin/x86-64_linux/cplex'
-os.environ["CPLEXPATH"] = "/home/guso/.local/bin/ibm/cplex/bin/x86-64_linux/cplex"
+os.environ["CPLEXPATH"] = '/home/infres/dkiedanski/Cplex/cplex/bin/x86-64_linux/cplex'
+#os.environ["CPLEXPATH"] = "/home/guso/.local/bin/ibm/cplex/bin/x86-64_linux/cplex"
 #os.environ["CPLEXPATH"] = '/opt/ibm/ILOG/CPLEX_Studio129/cplex/bin/x86-64_linux/cplex'
 #print(parentdir)
 
-NICK = 'sim_dec_1-'
+NICK = 'sim_dec_fina_3-'
 
 T = 48
 p_1 = np.ones(T) * 16.0
@@ -48,15 +48,15 @@ PARAMS = {
     'b_max': 13,
     'eff_c': 0.95,
     'eff_d': 0.95,
-    'd_max': 1.25,
-    'd_min': -1.25,
+    'd_max': 2.5,
+    'd_min': -2.5,
     'seed': 420,
     'PRICES_BUY': [p_1, p_2],
     'PRICES_SELL': [ps],
     'T': T,
     'PATHTODATA': '{0}/simulations/data/customers_data.csv'.format(parentdir),
     'DAYS': 1,
-    'savepath': '{0}/Outputs/'.format(home),
+    'savepath': '{0}/Out/'.format(home),
 }
 
 ###################################################
@@ -79,8 +79,8 @@ if __name__ == '__main__':
     if os.path.isfile(name):
         print('File exists')
     else:
-        #onof = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]
-        onof = [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+        onof = [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1, 1]
+        #onof = [1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]
         run_one_day(day, PARAMS, onoff=onof, nick=NICK)
 
 
